@@ -103,3 +103,8 @@ textarea{
     padding: 10px ;
 }
 
+.added{
+    font-size: 5rem;
+    text-align: center;
+    margin-top: 2rem;
+}

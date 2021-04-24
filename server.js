@@ -40,9 +40,9 @@ app.use(express.urlencoded({extended:true}));
 
 ////PG
 //1
-const client = new pg.Client({connectionString:process.env.DATABASE_URL, ssl:{rejectUnauthorized:false}});
+// const client = new pg.Client({connectionString:process.env.DATABASE_URL, ssl:{rejectUnauthorized:false}});
 //2
-// const client= new pg.Client(process.env.DATABASE_URL);
+const client= new pg.Client(process.env.DATABASE_URL);
 
 
 //use method-override
@@ -68,6 +68,7 @@ app.post('/favorite-quotes', saveDataHandler);
 app.get('/favorite-quotes/:id', renderSingleChar);
 app.put('/favorite-quotes/:id', updateHandler);
 app.delete('/favorite-quotes/:id', deleteHandler);
+app.get('/alreadyAdded', alreadyAddedHandler)
 
 
 
@@ -97,14 +98,35 @@ function saveDataHandler(req,res){
     const safeValues= [quote,character,image];
     let SQL= `INSERT INTO table1 (quote,character,image) VALUES ($1,$2,$3);`;
 
-    client.query(SQL,safeValues).then(()=>{
+    let sqlSearch = `SELECT * FROM table1 WHERE character = '${character}';`;
 
-        res.redirect('/favorite-quotes');
+    client.query(sqlSearch).then(searchedData=>{
+        if(searchedData.rows.length===0){
 
-    });
+            client.query(SQL,safeValues).then(()=>{
+
+                res.redirect('/favorite-quotes');
+        
+            });
+
+        } else if(searchedData.rows[0].character===character){
+            res.redirect('/alreadyAdded');
+        }
+    })
+
+    // client.query(SQL,safeValues).then(()=>{
+
+    //     res.redirect('/favorite-quotes');
+
+    // });
+
+
 
 }
 
+function alreadyAddedHandler(req,res){
+    res.render('pages/alreadyAdded')
+}
 
 function renderFavHandler(req,res){
 
