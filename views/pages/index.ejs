@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME PAGE</title>
+    <link rel="stylesheet" href="../../style/reset.css">
+    <link rel="stylesheet" href="../../style/base.css">
+    <link rel="stylesheet" href="../../style/layout.css">
+    <link rel="stylesheet" href="../../style/modules.css">
+
+</head>
+<body>
+    <header>
+
+        <%- include('../layouts/header') %>
+
+    </header>
+
+    <main>
+        <section class="wrap">
+
+            <% data.forEach(e=>{ %>
+
+                <section class="container">
+    
+                    <h3>
+                        <%= e.character %> 
+                    </h3>
+    
+                    <p>
+                        <%= e.quote %> 
+                    </p>
+    
+                    <img src="<%= e.image %> " alt="">
+    
+                    <form action="/favorite-quotes" method="post">
+    
+                        <input type="hidden" name="character" value="<%= e.character %>">
+                        <input type="hidden" name="quote" value="<%= e.quote %>">
+                        <input type="hidden" name="image" value="<%= e.image %>">
+    
+                        <button type="submit"> Add to Fav</button>
+    
+    
+                    </form>
+    
+    
+                </section>
+    
+    
+            <% }) %> 
+
+        </section>
+
+
+    </main>
+    
+</body>
+</html>

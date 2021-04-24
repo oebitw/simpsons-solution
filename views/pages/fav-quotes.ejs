@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fav </title>
+    <link rel="stylesheet" href="../../style/reset.css">
+    <link rel="stylesheet" href="../../style/base.css">
+    <link rel="stylesheet" href="../../style/layout.css">
+    <link rel="stylesheet" href="../../style/modules.css">
+</head>
+<body>
+    <header>
+        <%- include('../layouts/header') %>
+
+    </header>
+
+    <main>
+
+        <div class="wrap-fav">
+
+            
+        <% data.forEach(e=>{ %>
+
+            <section class="container" >
+
+                <h3>
+                    <%= e.character %> 
+                </h3>
+
+                <p>
+                    <%= e.quote %> 
+                </p>
+
+                <img src="<%= e.image %> " alt="">
+
+                <button type="button"><a href="/favorite-quotes/<%= e.id %>">View Details</a> </button>
+
+
+            </section>
+
+
+        <% }) %> 
+
+        </div>
+
+
+    </main>
+    
+</body>
+</html>
